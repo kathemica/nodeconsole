@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "Node console project, training purpose",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kathemica/nodeconsole.git"
   },
   "keywords": [
     "node",
@@ -12,14 +17,15 @@
   ],
   "author": "kathemica@gmail.com",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kathemica/nodeconsole/issues"
+  },
+  "homepage": "https://github.com/kathemica/nodeconsole#readme",
   "dependencies": {
-    "axios": "^0.21.1",
-    "chalk": "^4.1.0",
-    "globally": "^0.0.0",
+    "colors": "^1.4.0",
+    "inquirer": "^7.3.3",
     "lodash": "^4.17.20",
     "nodemon": "^2.0.7",
-    "request": "^2.88.2",
-    "validator": "^13.1.17",
-    "yargs": "^15.4.0"
+    "uuid": "^8.3.2"
   }
 }
