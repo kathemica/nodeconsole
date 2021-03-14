@@ -26,7 +26,7 @@ const menuOptions = [
             },
             {
                 value: '5',
-                name: `${'5'.green} Complete task`
+                name: `${'5'.green} Update task`
             },
             {
                 value: '6',
@@ -81,23 +81,53 @@ const readInput = async (message) => {
     return desc;
 }
 
-const taskListing = async(taskArray = []) =>{   
-    const choices = [
-        {
-            type: 'list',
-            name: 'option',
-            message: 'What do you want to do?',
-            choices: taskArray.map( (task, i) => {                
+const deleteTaskListing = async(taskArray = []) =>{    
+    const choices= taskArray.map( (task, i) => {                                
                 return {
                     value: task.id,
                     name: `${(i+1).toString().green} ${task.description}`
                 }
-            })
-        }
-    ];
+            });
 
-    const { option } = await inquirer.prompt(choices);
-    return option ;
+    //for canceling purposes
+    choices.unshift({
+        value: '0',
+        name: '0'.red + ' Cancel'.red
+    });
+
+    const questions = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Delete'.blue,
+            choices
+        }
+    ]
+
+    const { id } = await inquirer.prompt(questions);
+    return id ;
+}
+
+const checkTaskListing = async(taskArray = []) =>{    
+    const choices= taskArray.map( (task, i) => {                                
+                return {
+                    value: task.id,
+                    name: `${(i+1).toString().green} ${task.description}`,
+                    checked: (task.completedOn) ? true: false
+                }
+            });    
+
+    const questions = [
+        {
+            type: 'checkbox',
+            name: 'ids',
+            message: 'Select'.blue,
+            choices
+        }
+    ]
+
+    const { ids } = await inquirer.prompt(questions);
+    return ids ;
 }
 
 const confirmQuestion = async (message) => {    
@@ -109,14 +139,15 @@ const confirmQuestion = async (message) => {
         }
     ];
     
-    const { desc } = await inquirer.prompt(choices);
-    return desc;
+    const { ok }  = await inquirer.prompt(choices);    
+    return ok;
 }
 
 export  {
     inquirerMenu,
     pause,
     readInput,
-    taskListing, 
-    confirmQuestion
+    deleteTaskListing, 
+    confirmQuestion,
+    checkTaskListing
 }

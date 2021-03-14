@@ -1,4 +1,4 @@
-import {v4 as uuidV4} from 'uuid';
+import {v4} from 'uuid';
 
 class Task {
     id = '';
@@ -7,7 +7,7 @@ class Task {
 
     constructor( description ){
         this.description = description;
-        this.id = uuidV4();
+        this.id = v4();
     };     
 }
 

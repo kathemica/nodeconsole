@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { inquirerMenu, pause, readInput, taskListing, confirmQuestion} from './helper/inquirer.js';
+import { inquirerMenu, pause, readInput, deleteTaskListing, confirmQuestion, checkTaskListing} from './helper/inquirer.js';
 import { Tasks } from './models/Tasks.js';
 import { readData, saveDB } from './helper/dbMethods.js';
 
@@ -9,6 +9,7 @@ console.clear();
 const main = async () => {
     let opt = '';
     let tasks = new Tasks(readData());
+    let lista = [];
 
     do{                
         opt = await inquirerMenu();    
@@ -29,17 +30,33 @@ const main = async () => {
                     console.log(tasks.getfilteredList(false));                     
                 break;
             case '5': //Complete task
+                    lista = tasks.listTasksAsArray();
+                    if (_.size(lista) > 0){
+                        const ids= await checkTaskListing(lista);                            
+                        tasks.toggleCompleteTasks(ids);
+                    }else{
+                        console.log(`There's nothing to update here`.red);
+                    }                    
                 break;
             case '6': //Delete task
-                    const id = await taskListing(tasks.listTasksAsArray());
-                    const confirm = await confirmQuestion('Sure?');
-                    if (confirm){
-                        console.log(tasks.deleteElementOnList(id));   
-                    };
-                    await pause();             
+                    lista = tasks.listTasksAsArray();                    
+                    
+                    if (_.size(lista) > 0){
+                        const id = await deleteTaskListing(lista);
+                        
+                        if (id !== '0'){
+                            const confirm = await confirmQuestion('Sure?');
+                        
+                            if (confirm){
+                                console.log(tasks.deleteElementOnList(id));
+                            };
+                        }                            
+                    }else{
+                        console.log(`There's nothing to delete here`.red);
+                    }
                 break;
         }
-        console.log(tasks.listTasksAsArray());
+        
         saveDB(tasks.listTasksAsArray());
 
         if (!_.isEqual(opt, '0')) await pause();
