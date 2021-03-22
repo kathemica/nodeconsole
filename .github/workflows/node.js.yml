@@ -16,5 +16,7 @@ jobs:
         run: node --version
       - name: Check NPM version
         run: npm --version
+      - name: Checking out code
+        uses: actions/checkout@v2        
       - name: Installing NPM dependencies
         run: npm install
