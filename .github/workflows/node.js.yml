@@ -21,4 +21,4 @@ jobs:
       - name: Installing NPM dependencies
         run: npm install
       - name: Running app
-        run: node app.js  
+        run: node about.js  
