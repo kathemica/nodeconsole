@@ -8,17 +8,17 @@ on:
     branches: [ main ]  
 jobs:
   first-job:
-    name: Buidl with Node
+    name: Build with Node
     runs-on: ubuntu-latest
     container: node:15.11.0
     steps:
-      - name: Check Node.js version
+      - name: Checking Node.js version
         run: node --version
-      - name: Check NPM version
+      - name: Checking NPM version
         run: npm --version
       - name: Checking out code
         uses: actions/checkout@v2        
       - name: Installing NPM dependencies
         run: npm install
-      - name: Running app
+      - name: Running about
         run: node about.js  
