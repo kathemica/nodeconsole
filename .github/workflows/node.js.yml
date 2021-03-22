@@ -10,9 +10,11 @@ jobs:
   first-job:
     name: Buidl with Node
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 15.x]
+    container: node:15.11.0
     steps:
-      - run: node --version      
-      - run: npm --version      
+      - name: Check Node.js version
+        run: node --version
+      - name: Check NPM version
+        run: npm --version
+      - name: Installing NPM dependencies
+        run: npm install
